@@ -6,10 +6,7 @@ import pl.joble.domain.AdjustableClock;
 import pl.joble.domain.numberreciver.dto.InputNumbersResultDto;
 import pl.joble.domain.numberreciver.dto.TicketDto;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 class NumberReceiverFacadeTest {
     NumberReceiverFacadeConfiguration config = new NumberReceiverFacadeConfiguration();
-    Clock clock = new AdjustableClock(LocalDateTime.of(2024,10,30,10,00,00).toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
+    AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024,11,2,8,00,00).toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
     NumberReceiverFacade facade = config.createNumberReceiverFacade(new NumberReceiverRepositoryTestImpl(), clock);
 
     @Test
@@ -55,7 +52,7 @@ class NumberReceiverFacadeTest {
         Set<Integer> numbersFromUser = Set.of(1,2, 3, 4, 5, 6);
         InputNumbersResultDto result = facade.inputNumbers(numbersFromUser);
         //when
-        List<TicketDto> ticketDtos = facade.userNumbers(LocalDateTime.of(2024,10,30,11,00,00));
+        List<TicketDto> ticketDtos = facade.userNumbers(LocalDateTime.of(2024,11,2,10,00,00));
         //then
         assertThat(ticketDtos, contains(TicketDto.builder()
                 .ticketId(result.ticketId())
@@ -63,5 +60,19 @@ class NumberReceiverFacadeTest {
                 .numbersFromUser(numbersFromUser)
                 .build()));
     }
+    @Test
+    public void should_set_the_draw_date_to_Saturday_at_10_AM(){
+        //given
+        Set<Integer> numbersFromUser = Set.of(1,2, 3, 4, 5, 6);
+        clock.backwardInTimeBy(Duration.ofDays(9));
+        facade.inputNumbers(numbersFromUser);
+
+        //when
+        List<TicketDto> ticketDtos = facade.userNumbers(LocalDateTime.of(2024,10,26,10,00,00));
+        //then
+        assertThat(LocalDateTime.now(clock).getDayOfWeek(), equalTo(DayOfWeek.THURSDAY));
+        assertThat(ticketDtos.getFirst().drawDate().getDayOfWeek(), equalTo(DayOfWeek.SATURDAY));
+    }
+
 
 }

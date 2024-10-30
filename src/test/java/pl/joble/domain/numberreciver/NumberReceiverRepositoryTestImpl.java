@@ -10,9 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
 class NumberReceiverRepositoryTestImpl implements NumberReceiverRepository {
 
     Map<String, Ticket> db = new ConcurrentHashMap<>();
+    Integer entityId = 0;
     @Override
     public Ticket save(Ticket ticket) {
-        db.put(ticket.id(), ticket);
+        Integer currentId = entityId+1;
+        db.put(currentId.toString(), ticket);
         return ticket;
     }
 

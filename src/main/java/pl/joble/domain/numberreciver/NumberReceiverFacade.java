@@ -15,13 +15,17 @@ public class NumberReceiverFacade {
      private final Validator validator;
      private final NumberReceiverRepository repository;
      private final Clock clock;
+     private final DrawDateGenerator dateGenerator;
 
 
      public InputNumbersResultDto inputNumbers(Set<Integer> numbersFromUser){
           if (validator.areNumbersCorrect(numbersFromUser)) {
                String id = UUID.randomUUID().toString();
-               LocalDateTime drawDate = LocalDateTime.now(clock);
-               Ticket savedTicket = repository.save(new Ticket(id, numbersFromUser, drawDate));
+               LocalDateTime drawDate = dateGenerator.generateNextDrawDate(clock);
+               Ticket savedTicket = repository.save(Ticket.builder()
+                               .numbers(numbersFromUser)
+                               .drawDate(drawDate)
+                       .build());
                return  InputNumbersResultDto.builder()
                        .drawDate(savedTicket.drawDate())
                        .ticketId(savedTicket.id())

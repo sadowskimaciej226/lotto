@@ -70,6 +70,7 @@ public class AdjustableClock extends Clock {
     public void advanceInTimeBy(Duration clockOffset) {
         this.instant = instant.plus(clockOffset);
     }
+    public void backwardInTimeBy(Duration clockOffset){this.instant = instant.minus(clockOffset);}
 
     public void plusDays(int days) {
         Duration offset = Duration.ofDays(days);
