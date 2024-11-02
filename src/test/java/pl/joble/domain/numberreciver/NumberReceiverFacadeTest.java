@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 class NumberReceiverFacadeTest {
     NumberReceiverFacadeConfiguration config = new NumberReceiverFacadeConfiguration();
@@ -73,6 +72,15 @@ class NumberReceiverFacadeTest {
         assertThat(LocalDateTime.now(clock).getDayOfWeek(), equalTo(DayOfWeek.THURSDAY));
         assertThat(ticketDtos.getFirst().drawDate().getDayOfWeek(), equalTo(DayOfWeek.SATURDAY));
     }
+    @Test
+    public void should_return_empty_list_if_there_aro_no_tickets_on_this_day(){
+        //given
+        //when
+        List<TicketDto> ticketDtos = facade.userNumbers(LocalDateTime.of(1000025,11,2,10,00,00));
+        //then
+        assertThat(ticketDtos, is(empty()));
+    }
+
 
 
 }
