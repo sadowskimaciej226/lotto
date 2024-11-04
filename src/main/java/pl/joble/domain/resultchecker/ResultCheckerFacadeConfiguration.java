@@ -8,7 +8,7 @@ public class ResultCheckerFacadeConfiguration {
     public ResultCheckerFacade createForTest(NumberReceiverFacade numberReceiverFacade,
                                              NumberGeneratorFacade numberGeneratorFacade,
                                              WinnerRepository winnerRepository){
-        return new ResultCheckerFacade(numberReceiverFacade, numberGeneratorFacade, winnerRepository);
+        return new ResultCheckerFacade(numberReceiverFacade, numberGeneratorFacade, winnerRepository, new WinnerRetriever());
     }
 
 }
