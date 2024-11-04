@@ -7,6 +7,7 @@ import pl.joble.domain.numberreciver.dto.TicketDto;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,6 +46,7 @@ public class NumberReceiverFacade {
      public LocalDateTime getNextDrawDate(){
           return dateGenerator.generateNextDrawDate(clock);
      }
+
 
 
 }
