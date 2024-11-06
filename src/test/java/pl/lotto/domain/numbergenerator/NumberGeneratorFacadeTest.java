@@ -18,7 +18,7 @@ public class NumberGeneratorFacadeTest {
     NumberGeneratorFacadeConfiguration config = new NumberGeneratorFacadeConfiguration();
     @Mock
     NumberReceiverFacade numberReceiverFacade = mock(NumberReceiverFacade.class);
-    NumberGeneratorFacade facade = config.createNumberGeneratorFacade(numberReceiverFacade, new WinningNumbersRepositoryTestImpl());
+    NumberGeneratorFacade facade = config.createNumberGeneratorFacadeForTest(numberReceiverFacade, new WinningNumbersRepositoryTestImpl());
 
     @Test
     public void should_returns_6_unique_winning_numbers(){

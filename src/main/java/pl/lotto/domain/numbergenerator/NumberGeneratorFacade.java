@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 public class NumberGeneratorFacade {
-    private final RandomNumberGenerator generator;
+    private final RandomNumberGenerable generator;
     private final NumberReceiverFacade numberReceiverFacade;
     private final WinningNumbersRepository repository;
 
 
     public WinningNumbersDto generateWinningNumbers(){
         WinningNumbers winningNumbersToSave = WinningNumbers.builder()
-                .winningNumbers(generator.generate6RandomNumbers())
+                .winningNumbers(generator.generate6RandomNumbers().randomNumbers())
                 .drawDate(numberReceiverFacade.getNextDrawDate())
                 .build();
 
