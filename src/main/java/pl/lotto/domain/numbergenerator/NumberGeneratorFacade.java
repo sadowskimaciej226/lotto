@@ -14,19 +14,20 @@ public class NumberGeneratorFacade {
     private final RandomNumberGenerable generator;
     private final NumberReceiverFacade numberReceiverFacade;
     private final WinningNumbersRepository repository;
+    private final WinningNumbersProperties properties;
 
 
     public WinningNumbersDto generateWinningNumbers(){
         WinningNumbers winningNumbersToSave = WinningNumbers.builder()
-                .winningNumbers(generator.generate6RandomNumbers().randomNumbers())
+                .winningNumbers(generator.generate6RandomNumbers(properties.count(), properties.lowerBand(), properties.upperBand()).randomNumbers())
                 .drawDate(numberReceiverFacade.getNextDrawDate())
                 .build();
 
-        WinningNumbers savedNumbers = repository.save(winningNumbersToSave);
+       // WinningNumbers savedNumbers = repository.save(winningNumbersToSave);
 
         return WinningNumbersDto.builder()
-                .winningNumbers(savedNumbers.winningNumbers())
-                .drawDate(savedNumbers.drawDate())
+                .winningNumbers(winningNumbersToSave.winningNumbers())
+                .drawDate(winningNumbersToSave.drawDate())
                 .build();
 
     }

@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 class NumberReceiverFacadeTest {
     NumberReceiverFacadeConfiguration config = new NumberReceiverFacadeConfiguration();
     AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024,11,2,8,00,00).toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
-    NumberReceiverFacade facade = config.createNumberReceiverFacade(new NumberReceiverRepositoryTestImpl(), clock);
+    NumberReceiverFacade facade = config.createNumberReceiverFacadeForTest(new NumberReceiverRepositoryTestImpl(), clock);
 
     @Test
     public void should_return_success_when_user_give_6_numbers(){
