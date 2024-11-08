@@ -9,7 +9,9 @@ import java.util.Set;
 class RandomNumberGenerator implements RandomNumberGenerable{
     private Random random = new Random();
     private Set<Integer> randomNumbers = new HashSet();
-    public SixRandomNumbersDto generate6RandomNumbers(){
+
+    @Override
+    public SixRandomNumbersDto generate6RandomNumbers(int count, int lowerBand, int upperBand) {
         while(randomNumbers.size()!=6){
             randomNumbers.add(random.nextInt(1,100));
         }
