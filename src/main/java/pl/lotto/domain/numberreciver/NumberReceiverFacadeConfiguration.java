@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Configuration
- class NumberReceiverFacadeConfiguration {
+public class NumberReceiverFacadeConfiguration {
 
     @Bean
     public NumberReceiverRepository numberReceiverRepository(){
