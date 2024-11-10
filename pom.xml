@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testcontainers.version>1.17.4</testcontainers.version>
         <wiremock-jre8.version>2.35.0</wiremock-jre8.version>
+        <awaitility.version>4.2.0</awaitility.version>
     </properties>
 
     <dependencies>
@@ -87,8 +88,15 @@
             <version>${wiremock-jre8.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <!--  AWAITILITY -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

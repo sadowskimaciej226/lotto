@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import pl.lotto.BaseIntegrationTest;
 import pl.lotto.domain.numbergenerator.NumberGeneratorFacade;
-import pl.lotto.domain.numbergenerator.RandomNumberGenerable;
-import pl.lotto.domain.numbergenerator.dto.SixRandomNumbersDto;
-import pl.lotto.domain.numbergenerator.dto.WinningNumbersDto;
+import pl.lotto.domain.numbergenerator.WinningNumbersNotFoundException;
 
-import static wiremock.org.hamcrest.MatcherAssert.assertThat;
-import static wiremock.org.hamcrest.Matchers.hasSize;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import static org.awaitility.Awaitility.await;
 
 public class ClientPlayedLottoAndWon extends BaseIntegrationTest {
 
@@ -30,14 +31,21 @@ public class ClientPlayedLottoAndWon extends BaseIntegrationTest {
                                [1, 2, 3, 4, 5, 6, 82, 82, 83, 83, 86, 57, 10, 81, 53, 93, 50, 54, 31, 88, 15, 43, 79, 32, 43]
                                 """.trim()
                         )));
-        //when
-        WinningNumbersDto winningNumbersDto = numberGeneratorFacade.generateWinningNumbers();
-        //then
-
-
-
 
 //        2.	step 2: system generated winning numbers for draw date: 19.11.2022 12:00
+      //given
+        LocalDateTime drawDate = LocalDateTime.of(2023, 2, 25, 12, 0, 0);
+      //when
+        await()
+                .atMost(Duration.ofSeconds(2))
+                .pollInterval(Duration.ofSeconds(1))
+                .until(()->{
+                    try {
+                        return !numberGeneratorFacade.findWinningNumbersByDate(drawDate).winningNumbers().isEmpty();
+                    } catch (WinningNumbersNotFoundException e){
+                        return false;
+                    }
+                });
 //        3.	step 3: user made POST /inputNumbers with 6 numbers (1, 2, 3, 4, 5, 6) at 16-11-2022 10:00 and system returned OK(200) with message: “success” and Ticket (DrawDate:19.11.2022 12:00 (Saturday), TicketId: sampleTicketId)
 //        4.	step 4: user made GET /results/notExistingId and system returned 404(NOT_FOUND) and body with (“message”: “Not found for id: notExistingId” and “status”: “NOT_FOUND”)
 //        5.	step 5: 3 days and 55 minutes passed, and it is 5 minute before draw (19.11.2022 11:55)
