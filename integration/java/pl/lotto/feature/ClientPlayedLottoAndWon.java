@@ -3,8 +3,10 @@ package pl.lotto.feature;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import pl.lotto.BaseIntegrationTest;
+import pl.lotto.domain.AdjustableClock;
 import pl.lotto.domain.numbergenerator.NumberGeneratorFacade;
 import pl.lotto.domain.numbergenerator.WinningNumbersNotFoundException;
 
@@ -18,6 +20,8 @@ public class ClientPlayedLottoAndWon extends BaseIntegrationTest {
 
     @Autowired
     NumberGeneratorFacade numberGeneratorFacade;
+    @MockBean
+    AdjustableClock clock;
 
     @Test
     public void client_played_and_won_a_game(){
@@ -34,7 +38,7 @@ public class ClientPlayedLottoAndWon extends BaseIntegrationTest {
 
 //        2.	step 2: system generated winning numbers for draw date: 19.11.2022 12:00
       //given
-        LocalDateTime drawDate = LocalDateTime.of(2023, 2, 25, 12, 0, 0);
+        LocalDateTime drawDate = LocalDateTime.of(2024, 11, 9, 10, 0, 0);
       //when
         await()
                 .atMost(Duration.ofSeconds(2))

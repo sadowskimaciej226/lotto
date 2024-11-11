@@ -10,20 +10,6 @@ import java.util.Optional;
 @Configuration
 public class NumberGeneratorFacadeConfiguration {
 
-    @Bean
-    public WinningNumbersRepository winningNumbersRepository(){
-        return new WinningNumbersRepository() {
-            @Override
-            public WinningNumbers save(WinningNumbers winningNumbers) {
-                return null;
-            }
-
-            @Override
-            public Optional<WinningNumbers> findByDate(LocalDateTime date) {
-                return Optional.empty();
-            }
-        };
-    }
 
     @Bean
     public NumberGeneratorFacade numberGeneratorFacade(

@@ -23,17 +23,17 @@ public class NumberGeneratorFacade {
                 .drawDate(numberReceiverFacade.getNextDrawDate())
                 .build();
 
-       // WinningNumbers savedNumbers = repository.save(winningNumbersToSave);
+        WinningNumbers savedNumbers = repository.save(winningNumbersToSave);
 
         return WinningNumbersDto.builder()
-                .winningNumbers(winningNumbersToSave.winningNumbers())
-                .drawDate(winningNumbersToSave.drawDate())
+                .winningNumbers(savedNumbers.winningNumbers())
+                .drawDate(savedNumbers.drawDate())
                 .build();
 
     }
 
     public WinningNumbersDto findWinningNumbersByDate(LocalDateTime date){
-        WinningNumbers numbersByDate = repository.findByDate(date)
+        WinningNumbers numbersByDate = repository.findByDrawDate(date)
                 .orElseThrow(() -> new WinningNumbersNotFoundException("Not found"));
        return WinningNumbersDto.builder()
                 .drawDate(numbersByDate.drawDate())
