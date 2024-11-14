@@ -29,6 +29,7 @@ public class NumberReceiverFacade {
                        .build());
                return  InputNumbersResultDto.builder()
                        .drawDate(savedTicket.drawDate())
+                       .inputNumbers(savedTicket.numbers())
                        .ticketId(savedTicket.id())
                        .message("Success")
                        .build();
@@ -38,7 +39,7 @@ public class NumberReceiverFacade {
                   .build();
      }
      public List<TicketDto> userNumbers(LocalDateTime date){
-          List<Ticket> allTickets = repository.findAllByDate(date);
+          List<Ticket> allTickets = repository.findAllByDrawDate(date);
           return allTickets.stream()
                   .map(TicketMapper::mapToDto)
                   .toList();

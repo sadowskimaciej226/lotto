@@ -13,20 +13,6 @@ import java.util.List;
 @Configuration
 public class NumberReceiverFacadeConfiguration {
 
-    @Bean
-    public NumberReceiverRepository numberReceiverRepository(){
-        return new NumberReceiverRepository() {
-            @Override
-            public Ticket save(Ticket ticket) {
-                return null;
-            }
-
-            @Override
-            public List<Ticket> findAllByDate(LocalDateTime drawDate) {
-                return null;
-            }
-        };
-    }
 
     @Bean
     public Clock clock(){
