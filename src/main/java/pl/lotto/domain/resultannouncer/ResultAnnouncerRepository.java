@@ -1,7 +1,9 @@
 package pl.lotto.domain.resultannouncer;
 
-public interface ResultAnnouncerRepository {
-    boolean existsById(String ticketId);
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-    AnnouncerResponse save(AnnouncerResponse announcerResponse);
+public interface ResultAnnouncerRepository extends MongoRepository<AnnouncerResponse, String> {
+   // boolean existsById(String ticketId);
+
+
 }

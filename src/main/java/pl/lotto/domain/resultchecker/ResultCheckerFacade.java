@@ -38,7 +38,7 @@ public class ResultCheckerFacade {
     }
 
     public PlayerDto findById(String id) {
-        Player player = winnerRepository.findById(id).orElseThrow(TicketNotFoundException::new);
+        Player player = winnerRepository.findById(id).orElseThrow(() -> new TicketNotFoundException("Not found for id: " + id));
         return PlayerMapper.mapFromEntityToDto(player);
     }
 }
