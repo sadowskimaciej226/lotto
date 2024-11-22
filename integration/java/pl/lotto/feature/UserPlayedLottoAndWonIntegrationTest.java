@@ -42,7 +42,7 @@ public class UserPlayedLottoAndWonIntegrationTest extends BaseIntegrationTest {
                         )));
         //step 2: system fetched winning numbers for draw date: 19.11.2022 12:00
         // given
-        LocalDateTime drawDate = LocalDateTime.of(2022, 11, 19, 10, 0, 0);
+        LocalDateTime drawDate = LocalDateTime.of(2022, 11, 16, 10, 0, 0);
         // when && then
         await()
                 .atMost(Duration.ofSeconds(20))
@@ -79,13 +79,15 @@ public class UserPlayedLottoAndWonIntegrationTest extends BaseIntegrationTest {
                         """ 
                         {
                                 "message": "Not found for id: notExistingId",
-                                                        "status": "NOT_FOUND"
+                                "status": "NOT_FOUND"
                         }
                         """.trim()
                 ));
 
-        //step 5: 3 days and 1 minute passed, and it is 1 minute after the draw date (19.11.2022 12:01)
+        //step 5: 3 days and 1 minute passed, and it is 1 minute after the draw date (19.11.2022 10:01)
+        clock.plusDaysAndMinutes(3,61);
         //step 6: system generated result for TicketId: sampleTicketId with draw date 19.11.2022 12:00, and saved it with 6 hits
+
         //step 7: 3 hours passed, and it is 1 minute after announcement time (19.11.2022 15:01)
         //step 8: user made GET /results/sampleTicketId and system returned 200 (OK)
     }
